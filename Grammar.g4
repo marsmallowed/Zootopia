@@ -136,10 +136,26 @@ while_loop : WhileKey OpenPar cond_expr ClosePar code_block;
 dowhile_loop : DoWhileKey code_block WhileKey OpenPar cond_expr ClosePar Terminator;
 
 // Function Declaration & Call
-param : datatype Var | datatype Var next_param
-		| array_datatype Var | array_datatype Var next_param;
-next_param : Separator datatype Var | Separator array_datatype Var;
-func_dec : datatype Func OpenPar param ClosePar code_block;
-func_call : Func OpenPar param ClosePar Terminator;
+param_dec : datatype Var | datatype Var next_param_dec
+		| array_datatype Var | array_datatype Var next_param_dec;
+next_param_dec : Separator datatype Var | Separator array_datatype Var | param_dec;
+func_dec : datatype Func OpenPar param_dec ClosePar code_block;
+param_call : Var next_param_call | Var;
+next_param_call : Separator Var | param_call;
+func_call : Func OpenPar param_call ClosePar Terminator;
+
+// Pre-defined Functions (printf & scanf)
+// TODO : Take note that printf and scanf functions should NOT be able to accept arrays as parameters (unless the index is indicated)
+print : 'printf' OpenPar param_call ClosePar Terminator;
+scan : 'scanf' OpenPar param_call ClosePar Terminator;
 
 WS : [' '\t'\r''\n']+ -> skip;
+
+
+
+
+
+
+
+
+

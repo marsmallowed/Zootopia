@@ -29,6 +29,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitWhile_loop(@NotNull GrammarParser.While_loopContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammarParser#scan}.
+	 * @param ctx the parse tree
+	 */
+	void enterScan(@NotNull GrammarParser.ScanContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#scan}.
+	 * @param ctx the parse tree
+	 */
+	void exitScan(@NotNull GrammarParser.ScanContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammarParser#var_assign}.
 	 * @param ctx the parse tree
 	 */
@@ -121,16 +131,6 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitDatatype(@NotNull GrammarParser.DatatypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#param}.
-	 * @param ctx the parse tree
-	 */
-	void enterParam(@NotNull GrammarParser.ParamContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#param}.
-	 * @param ctx the parse tree
-	 */
-	void exitParam(@NotNull GrammarParser.ParamContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code MultDivMod}
 	 * labeled alternative in {@link GrammarParser#expr}.
 	 * @param ctx the parse tree
@@ -142,6 +142,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMultDivMod(@NotNull GrammarParser.MultDivModContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#next_param_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterNext_param_call(@NotNull GrammarParser.Next_param_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#next_param_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitNext_param_call(@NotNull GrammarParser.Next_param_callContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#statement}.
 	 * @param ctx the parse tree
@@ -193,16 +203,6 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitInc_dec(@NotNull GrammarParser.Inc_decContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#next_param}.
-	 * @param ctx the parse tree
-	 */
-	void enterNext_param(@NotNull GrammarParser.Next_paramContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#next_param}.
-	 * @param ctx the parse tree
-	 */
-	void exitNext_param(@NotNull GrammarParser.Next_paramContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrammarParser#boolean_lit}.
 	 * @param ctx the parse tree
 	 */
@@ -224,6 +224,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddSub(@NotNull GrammarParser.AddSubContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#next_param_dec}.
+	 * @param ctx the parse tree
+	 */
+	void enterNext_param_dec(@NotNull GrammarParser.Next_param_decContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#next_param_dec}.
+	 * @param ctx the parse tree
+	 */
+	void exitNext_param_dec(@NotNull GrammarParser.Next_param_decContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code NegaUnit}
 	 * labeled alternative in {@link GrammarParser#expr}.
@@ -299,6 +309,26 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitNext_cond(@NotNull GrammarParser.Next_condContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link GrammarParser#param_dec}.
+	 * @param ctx the parse tree
+	 */
+	void enterParam_dec(@NotNull GrammarParser.Param_decContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#param_dec}.
+	 * @param ctx the parse tree
+	 */
+	void exitParam_dec(@NotNull GrammarParser.Param_decContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#param_call}.
+	 * @param ctx the parse tree
+	 */
+	void enterParam_call(@NotNull GrammarParser.Param_callContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#param_call}.
+	 * @param ctx the parse tree
+	 */
+	void exitParam_call(@NotNull GrammarParser.Param_callContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link GrammarParser#next_var}.
 	 * @param ctx the parse tree
 	 */
@@ -348,6 +378,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCondition(@NotNull GrammarParser.ConditionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrint(@NotNull GrammarParser.PrintContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#print}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrint(@NotNull GrammarParser.PrintContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#s}.
 	 * @param ctx the parse tree
