@@ -1,4 +1,4 @@
-package model;
+package antlr;
 // Generated from Grammar.g4 by ANTLR 4.4
 
 import org.antlr.v4.runtime.ParserRuleContext;

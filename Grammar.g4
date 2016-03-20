@@ -41,6 +41,8 @@ CommentBlock : '#';
 // Keywords
 VoidKey : 'neuter';
 MainKey : 'zoo';
+PrintKey : 'print';
+ScanKey : 'scan';
 IntKey : 'sheep';
 FloatKey : 'otter';
 StringKey : 'snake';
@@ -97,11 +99,15 @@ var_init : datatype Var AssignOp (literal | expr) Terminator | datatype Var Assi
 next_var_i : Separator Var AssignOp (literal | expr) | Separator Var AssignOp (literal | expr) Terminator;
 next_arr_i : Separator Var AssignOp 'new' ArrayKey (Num | expr) | Separator Var AssignOp 'new' ArrayKey (Num | expr) Terminator;
 
+// Index of an Array
+array_index : Var ArrayKey Num | OpenPar Var ArrayKey Num ClosePar;
+
 // Assignment Statements
 // TODO : dito na rin ba ichecheck kung tama yung datatype ng inassign na value
 //			(i.e. int x; x = 'a'; OR char c; c += 5; OR String s; s++;)?
 //		  pati kung declared yung variable na inaassign (int x; x = y; OR int y; x = y;)?
 var_assign : Var AssignOp (literal | expr | Var) Terminator;
+array_assign : array_index AssignOp (literal | expr | Var) Terminator;
 addsub_assign: Var (AddAssignOp | SubAssignOp) (literal | expr | Var) Terminator;
 inc_dec : Var (IncOp | DecOp) Terminator;
 
@@ -137,17 +143,21 @@ dowhile_loop : DoWhileKey code_block WhileKey OpenPar cond_expr ClosePar Termina
 
 // Function Declaration & Call
 param_dec : datatype Var | datatype Var next_param_dec
+		| datatype array_index | datatype array_index next_param_dec
 		| array_datatype Var | array_datatype Var next_param_dec;
-next_param_dec : Separator datatype Var | Separator array_datatype Var | param_dec;
+next_param_dec : Separator datatype Var | Separator datatype array_index | Separator array_datatype Var | param_dec;
 func_dec : datatype Func OpenPar param_dec ClosePar code_block;
-param_call : Var next_param_call | Var;
-next_param_call : Separator Var | param_call;
+param_call : Var next_param_call | array_index next_param_call | array_index | Var;
+next_param_call : Separator Var | Separator array_index | param_call;
 func_call : Func OpenPar param_call ClosePar Terminator;
 
 // Pre-defined Functions (printf & scanf)
 // TODO : Take note that printf and scanf functions should NOT be able to accept arrays as parameters (unless the index is indicated)
-print : 'printf' OpenPar param_call ClosePar Terminator;
-scan : 'scanf' OpenPar param_call ClosePar Terminator;
+predef_param : (Var | literal | array_index | expr) next_predef_param | (Var | literal | array_index | expr);
+next_predef_param : AddOp (Var | literal | array_index | expr) | predef_param;
+print_var : PrintKey OpenPar predef_param ClosePar Terminator; 
+scan_lit : string_lit | char_lit | Num | float_lit;
+scan : ScanKey OpenPar scan_lit ClosePar Terminator;
 
 WS : [' '\t'\r''\n']+ -> skip;
 
