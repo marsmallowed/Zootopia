@@ -118,8 +118,8 @@ expr : '-' expr								#NegaExpr
 	| OpenPar expr ClosePar					#ParenExpr
 	| expr (MultOp | DivOp | ModOp) expr	#MultDivMod
 	| expr (AddOp | SubOp) expr				#AddSub
-	| Num									#Unit
-	| '-' Num								#NegaUnit;
+	| Num | float_lit	 					#Unit
+	| '-' Num | '-'	float_lit				#NegaUnit;
 	
 // Conditional Statements
 cond_op : LessOp | LessEqualOp | GreaterOp | GreaterEqualOp | EqualOp | NotEqualOp;
