@@ -36,7 +36,7 @@ Separator : ',';
 Terminator : '<3';
 OpenBrace : 'e-worm'; // {
 CloseBrace : 'f-worm'; // }
-CommentBlock : '#';
+CommentBlock : '#'(''..'~')* -> skip;
 
 // Keywords
 VoidKey : 'neuter';
@@ -62,7 +62,7 @@ NullKey : 'extinct';
 Var : [A-Za-z_]+;
 Func : 'func'[A-Za-z]*;
 Char : '`' (''..'~') '`';
-String : '~' (''..'~') '~';
+String : '~' (''..'~')* '~';
 
 /** PARSER */
 start 

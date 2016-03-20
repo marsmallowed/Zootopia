@@ -31,7 +31,7 @@ public class GrammarParser extends Parser {
 		"'arf'", "'sss'", "'meow'", "'dook'", "'mooodulo'", "'powpow'", "'='", 
 		"'arfthis'", "'sssthis'", "'mate'", "'prey'", "'<'", "'<='", "'>'", "'>='", 
 		"'=='", "'!='", "'&&'", "'||'", "'!'", "'('", "')'", "'['", "']'", "','", 
-		"'<3'", "'e-worm'", "'f-worm'", "'#'", "'neuter'", "'zoo'", "'print'", 
+		"'<3'", "'e-worm'", "'f-worm'", "CommentBlock", "'neuter'", "'zoo'", "'print'", 
 		"'scan'", "'sheep'", "'otter'", "'snake'", "'worm'", "'boo'", "'spider'", 
 		"'purr'", "'rawr'", "'dog'", "'cat'", "'catdog'", "'foodchain'", "'run'", 
 		"'move'", "'back'", "'extinct'", "Var", "Func", "Char", "String", "WS"
