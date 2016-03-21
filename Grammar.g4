@@ -59,8 +59,8 @@ WhileKey : 'run';
 DoWhileKey : 'move';
 ReturnKey : 'back';
 NullKey : 'extinct';
+Func : 'func'[A-Za-z]+;
 Var : [A-Za-z_]+;
-Func : 'func'[A-Za-z]*;
 Char : '`' (''..'~') '`';
 String : '~' (''..'~')* '~';
 
@@ -83,10 +83,10 @@ void_func
 	: VoidKey Func OpenPar (param_dec)? ClosePar OpenBrace code_block CloseBrace;
 	
 ret_func
-	: datatype Func OpenPar (param_dec)? ClosePar OpenBrace code_block ReturnKey (literal|Var|expr) CloseBrace;
+	: datatype Func OpenPar (param_dec)? ClosePar OpenBrace code_block ReturnKey (literal|Var|expr) Terminator CloseBrace;
 
 code_block 
-	:  (statement code_block)?; 
+	: (statement code_block)?;
 	
 statement 
 	: var_dec 
@@ -99,12 +99,12 @@ statement
 	| for_loop 
 	| while_loop 
 	| dowhile_loop 
-	| func_call
+	| func_call Terminator
 	| print
-	|scan;
+	| scan;
 
 // Datatypes
-datatype 
+datatype
 	: IntKey 
 	| FloatKey 
 	| StringKey 
@@ -158,7 +158,7 @@ array_index
 
 // Assignment Statements
 var_assign 
-	: Var AssignOp (literal | expr | Var) Terminator;
+	: Var AssignOp (func_call | expr | literal | Var ) Terminator;
 	
 array_assign 
 	: array_index AssignOp (literal | expr | Var) Terminator;
@@ -220,35 +220,26 @@ dowhile_loop
 
 // Function Declaration & Call
 param_dec 
-	: datatype Var 
-	| datatype Var next_param_dec
+	: datatype Var Separator param_dec
+	| datatype array_index Separator param_dec
+	| array_datatype Var Separator param_dec
+	| datatype Var
 	| datatype array_index 
-	| datatype array_index next_param_dec
-	| array_datatype Var 
-	| array_datatype Var next_param_dec;
-	
-next_param_dec 
-	: Separator datatype Var 
-	| Separator datatype array_index 
-	| Separator array_datatype Var 
-	| param_dec;
+	| array_datatype Var ;
 	
 func_dec 
 	: datatype Func OpenPar param_dec ClosePar OpenBrace code_block CloseBrace;
 
 param_call 
-	: Var next_param_call 
-	| array_index next_param_call 
-	| array_index 
+	: Var Separator param_call
+	| array_index Separator param_call
+	| literal Separator param_call
+	| array_index
+	| literal
 	| Var;
-	
-next_param_call 
-	: Separator Var 
-	| Separator array_index 
-	| param_call;
 
 func_call 
-	: Func OpenPar param_call ClosePar Terminator;
+	: Func OpenPar param_call ClosePar;
 
 // Pre-defined Functions (printf & scanf)
 // TODO : Take note that printf and scanf functions should NOT be able to accept arrays as parameters (unless the index is indicated)
