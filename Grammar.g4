@@ -5,7 +5,7 @@ grammar Grammar;
 
 /** LEXER */
 Num	: [0-9]+; 
-Float: [0-9]+ '.' [0-9]+ ('e''-'?[0-9]+)?;
+Float: [0-9]+ '.' [0-9]+;
 
 // Operators & Symbols
 AddOp : 'arf'; // +
@@ -19,6 +19,7 @@ AddAssignOp : 'arfthis'; // +=
 SubAssignOp : 'sssthis'; // -=
 IncOp : 'mate'; // ++
 DecOp : 'prey'; // -- 
+Terminator : '<3';
 LessOp : '<';
 LessEqualOp : '<=';
 GreaterOp : '>';
@@ -33,10 +34,10 @@ ClosePar : ')';
 OpenBracket : '[';
 CloseBracket : ']';
 Separator : ',';
-Terminator : '<3';
+CondSep: ':';
 OpenBrace : 'e-worm'; // {
 CloseBrace : 'f-worm'; // }
-CommentBlock : '#'(''..'~')* -> skip;
+CommentBlock : 'noise' '-' ~[\r\n]* '\r\n'? '-' -> skip ; //error
 
 // Keywords
 VoidKey : 'neuter';
@@ -59,10 +60,11 @@ WhileKey : 'run';
 DoWhileKey : 'move';
 ReturnKey : 'back';
 NullKey : 'extinct';
+NewKey : 'new';
 Func : 'func'[A-Za-z]+;
+Char : '|' [A-Za-z]? '|'; //error
+String : '?' [A-Za-z]* '?'; // error
 Var : [A-Za-z_]+;
-Char : '`' (''..'~') '`';
-String : '~' (''..'~')* '~';
 
 /** PARSER */
 start 
@@ -83,7 +85,7 @@ void_func
 	: VoidKey Func OpenPar (param_dec)? ClosePar OpenBrace code_block CloseBrace;
 	
 ret_func
-	: datatype Func OpenPar (param_dec)? ClosePar OpenBrace code_block ReturnKey (literal|Var|expr) Terminator CloseBrace;
+	: datatype Func OpenPar (param_dec)? ClosePar OpenBrace code_block ReturnKey expr Terminator CloseBrace;
 
 code_block 
 	: (statement code_block)?;
@@ -93,7 +95,7 @@ statement
 	| var_init 
 	| var_assign 
 	| addsub_assign 
-	| inc_dec 
+	| inc_dec Terminator
 	| expr Terminator
 	| conditional 
 	| for_loop 
@@ -129,27 +131,27 @@ literal
 // Variable Declaration / Initialization
 var_dec 
 	: datatype Var Terminator 
+	| array_datatype Var Terminator
 	| array_datatype Var next_var
-	| datatype Var next_var 
-	| array_datatype Var Terminator;
+	| datatype Var next_var;
 	
 next_var 
-	: Separator Var 
+	: Separator Var next_var 
 	| Separator Var Terminator;
 	
 var_init 
-	: datatype Var AssignOp (literal | expr) Terminator 
-	| datatype Var AssignOp (literal | expr) next_var_i
-	| array_datatype Var AssignOp 'new' ArrayKey (Num | expr) Terminator 
-	| array_datatype Var AssignOp 'new' ArrayKey (Num | expr) next_arr_i;
+	: datatype Var AssignOp expr Terminator 
+	| datatype Var AssignOp expr next_var_i
+	| array_datatype Var AssignOp NewKey ArrayKey expr Terminator 
+	| array_datatype Var AssignOp NewKey ArrayKey expr next_arr_i;
 	
 next_var_i 
-	: Separator Var AssignOp (literal | expr) 
-	| Separator Var AssignOp (literal | expr) Terminator;
+	: Separator Var AssignOp expr next_var_i
+	| Separator Var AssignOp expr Terminator;
 	
 next_arr_i 
-	: Separator Var AssignOp 'new' ArrayKey (Num | expr) 
-	| Separator Var AssignOp 'new' ArrayKey (Num | expr) Terminator;
+	: Separator Var AssignOp NewKey ArrayKey expr next_arr_i
+	| Separator Var AssignOp NewKey ArrayKey expr Terminator;
 
 // Index of an Array
 array_index 
@@ -158,24 +160,31 @@ array_index
 
 // Assignment Statements
 var_assign 
-	: Var AssignOp (func_call | expr | literal | Var ) Terminator;
+	: Var AssignOp expr Terminator;
 	
 array_assign 
-	: array_index AssignOp (literal | expr | Var) Terminator;
+	: array_index AssignOp expr Terminator;
 	
 addsub_assign
-	: Var (AddAssignOp | SubAssignOp) (literal | expr | Var) Terminator;
+	: Var (AddAssignOp | SubAssignOp) expr Terminator;
 	
 inc_dec 
-	: Var (IncOp | DecOp) Terminator;
+	: Var (IncOp | DecOp);
 
 // Arithmetic Expressions
-expr : '-' expr								#NegaExpr 
+expr
+	: '-' expr								#NegaExpr 
 	| OpenPar expr ClosePar					#ParenExpr
 	| expr (MultOp | DivOp | ModOp) expr	#MultDivMod
 	| expr (AddOp | SubOp) expr				#AddSub
-	| literal								#atom
-	| Var									#variable;
+	| operand								#atom;
+	
+operand
+	: literal		#literalOp
+	| Var			#variableOp
+	| array_index   #arrayOp
+	| func_call		#callOp
+	| inc_dec		#incdecOp;
 	
 // Conditional Statements
 cond_op 
@@ -193,7 +202,7 @@ cond_expr
 	| condition							#atomCon;
 	
 condition
-	: expr cond_op expr;
+	: expr (cond_op expr)?;
 	
 if_cond 
 	: IfKey OpenPar cond_expr ClosePar OpenBrace code_block CloseBrace;
@@ -210,7 +219,7 @@ conditional
 
 // Loop Statements
 for_loop 
-	: ForKey OpenPar cond_expr ClosePar OpenBrace code_block CloseBrace;
+	: ForKey OpenPar (cond_expr | cond_expr CondSep cond_expr) ClosePar OpenBrace code_block CloseBrace;
 	
 while_loop 
 	: WhileKey OpenPar cond_expr ClosePar OpenBrace code_block CloseBrace;
@@ -226,9 +235,6 @@ param_dec
 	| datatype Var
 	| datatype array_index 
 	| array_datatype Var ;
-	
-func_dec 
-	: datatype Func OpenPar param_dec ClosePar OpenBrace code_block CloseBrace;
 
 param_call 
 	: Var Separator param_call
@@ -243,16 +249,16 @@ func_call
 
 // Pre-defined Functions (printf & scanf)
 // TODO : Take note that printf and scanf functions should NOT be able to accept arrays as parameters (unless the index is indicated)
-predef_param 
-	: (Var | literal | array_index | expr) next_predef_param 
-	| (Var | literal | array_index | expr);
-	
-next_predef_param 
-	: AddOp (Var | literal | array_index | expr) 
-	| predef_param;
+//predef_param 
+//	: expr next_predef_param 
+//	| (Var | literal | array_index | expr);
+//	
+//next_predef_param 
+//	: AddOp expr 
+//	| predef_param;
 	
 print 
-	: PrintKey OpenPar predef_param ClosePar Terminator; 
+	: PrintKey OpenPar expr ClosePar Terminator; 
 	
 scan_lit 
 	: String 
