@@ -65,6 +65,18 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterArrayOp(@NotNull GrammarParser.ArrayOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayOp(@NotNull GrammarParser.ArrayOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterParam_call(@NotNull GrammarParser.Param_callContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -89,18 +101,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFloat(@NotNull GrammarParser.FloatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFloat(@NotNull GrammarParser.FloatContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterParam_dec(@NotNull GrammarParser.Param_decContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -108,6 +108,18 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParam_dec(@NotNull GrammarParser.Param_decContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFloat(@NotNull GrammarParser.FloatContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFloat(@NotNull GrammarParser.FloatContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -281,18 +293,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNext_predef_param(@NotNull GrammarParser.Next_predef_paramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNext_predef_param(@NotNull GrammarParser.Next_predef_paramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAddSub(@NotNull GrammarParser.AddSubContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -300,6 +300,18 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAddSub(@NotNull GrammarParser.AddSubContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCallOp(@NotNull GrammarParser.CallOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCallOp(@NotNull GrammarParser.CallOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -329,13 +341,13 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNext_param_dec(@NotNull GrammarParser.Next_param_decContext ctx) { }
+	@Override public void enterVariableOp(@NotNull GrammarParser.VariableOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNext_param_dec(@NotNull GrammarParser.Next_param_decContext ctx) { }
+	@Override public void exitVariableOp(@NotNull GrammarParser.VariableOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -425,13 +437,25 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunc_dec(@NotNull GrammarParser.Func_decContext ctx) { }
+	@Override public void enterIncdecOp(@NotNull GrammarParser.IncdecOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFunc_dec(@NotNull GrammarParser.Func_decContext ctx) { }
+	@Override public void exitIncdecOp(@NotNull GrammarParser.IncdecOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLiteralOp(@NotNull GrammarParser.LiteralOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLiteralOp(@NotNull GrammarParser.LiteralOpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -480,18 +504,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitCond_op(@NotNull GrammarParser.Cond_opContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterNext_param_call(@NotNull GrammarParser.Next_param_callContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitNext_param_call(@NotNull GrammarParser.Next_param_callContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -641,18 +653,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPredef_param(@NotNull GrammarParser.Predef_paramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPredef_param(@NotNull GrammarParser.Predef_paramContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterString(@NotNull GrammarParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -684,18 +684,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDatatype(@NotNull GrammarParser.DatatypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVariable(@NotNull GrammarParser.VariableContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVariable(@NotNull GrammarParser.VariableContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

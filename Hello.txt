@@ -1,0 +1,8 @@
+
+neuter zoo()
+e-worm
+	sheep vari = 5, varj = 0 <3
+	varj = vari <3
+	worm varg = `a` <3
+	snake vargain = ~asda~ <3
+f-worm

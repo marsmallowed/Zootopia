@@ -4,66 +4,62 @@
 grammar Grammar;
 
 /** LEXER */
-Num	: [0-9]+; 
-Float: [0-9]+ '.' [0-9]+;
-
-// Operators & Symbols
-AddOp : 'arf'; // +
-SubOp : 'sss'; // -
-MultOp : 'meow'; // *
-DivOp : 'dook'; // /
-ModOp : 'mooodulo'; // %
-ExpOp : 'powpow'; // ^
-AssignOp : '=';
-AddAssignOp : 'arfthis'; // +=
-SubAssignOp : 'sssthis'; // -=
-IncOp : 'mate'; // ++
-DecOp : 'prey'; // -- 
-Terminator : '<3';
-LessOp : '<';
-LessEqualOp : '<=';
-GreaterOp : '>';
-GreaterEqualOp : '>=';
-EqualOp : '==';
-NotEqualOp : '!=';
-AndOp : '&&';
-OrOp : '||';
-NotOp : '!';
-OpenPar : '(';
-ClosePar : ')';
-OpenBracket : '[';
-CloseBracket : ']';
-Separator : ',';
-CondSep: ':';
-OpenBrace : 'e-worm'; // {
-CloseBrace : 'f-worm'; // }
-CommentBlock : 'noise' '-' ~[\r\n]* '\r\n'? '-' -> skip ; //error
-
-// Keywords
-VoidKey : 'neuter';
 MainKey : 'zoo';
-PrintKey : 'print';
-ScanKey : 'scan';
+VoidKey : 'neuter';
 IntKey : 'sheep';
 FloatKey : 'otter';
 StringKey : 'snake';
 CharKey : 'worm';
 BooleanKey : 'boo';
 ArrayKey : 'spider'; // Ex: int[] -> sheep spider varName; varName spider 0 = 5; -- assign value 5 to varName's first index 
-PrintfKey : 'purr';
-ScanfKey : 'rawr';
+Num	: [0-9]+; 
+Float: [0-9]+ '.' [0-9]+;
+Char : '`' [A-Za-z]? '`';
+String : '~' [A-Za-z]* '~';
+TrueKey: 'diurnal';
+FalseKey: 'nocturnal';
+PrintKey : 'purr';
+ScanKey : 'rawr';
+Terminator : '<3';
+ElseIfKey : 'catdog';
 IfKey : 'dog';
 ElseKey : 'cat';
-ElseIfKey : 'catdog';
 ForKey : 'foodchain';
 WhileKey : 'run';
 DoWhileKey : 'move';
+OpenPar : '(';
+ClosePar : ')';
+OpenBracket : '[';
+CloseBracket : ']';
+OpenBrace : 'e-worm'; // {
+CloseBrace : 'f-worm'; // }
+AddAssignOp : 'arfthis'; // +=
+SubAssignOp : 'sssthis'; // -=
+AddOp : 'arf'; // +
+SubOp : 'sss'; // -
+MultOp : 'meow'; // *
+DivOp : 'dook'; // /
+ModOp : 'mooodulo'; // %
+ExpOp : 'powpow'; // ^
+IncOp : 'mate'; // ++
+DecOp : 'prey'; // -- 
+NewKey : 'new';
 ReturnKey : 'back';
 NullKey : 'extinct';
-NewKey : 'new';
+LessEqualOp : '<=';
+GreaterEqualOp : '>=';
+LessOp : '<';
+GreaterOp : '>';
+NotEqualOp : '!=';
+EqualOp : '==';
+AssignOp : '=';
+NotOp : '!';
+AndOp : '&&';
+OrOp : '||';
+Separator : ',';
+CondSep: ':';
 Func : 'func'[A-Za-z]+;
-Char : '|' [A-Za-z]? '|'; //error
-String : '?' [A-Za-z]* '?'; // error
+CommentBlock : 'noise' '-' ~[\r\n]* '\r\n'? '-' -> skip ;
 Var : [A-Za-z_]+;
 
 /** PARSER */
@@ -88,7 +84,8 @@ ret_func
 	: datatype Func OpenPar (param_dec)? ClosePar OpenBrace code_block ReturnKey expr Terminator CloseBrace;
 
 code_block 
-	: (statement code_block)?;
+	: statement code_block
+	| statement;
 	
 statement 
 	: var_dec 
@@ -118,8 +115,8 @@ array_datatype
 
 // Literals (For integers, the Num rule is used)
 boolean_lit 
-	: 'diurnal' 	#true
-	| 'nocturnal'	#false;
+	: TrueKey 	#true
+	| FalseKey	#false;
 	 
 literal 
 	: SubOp? Num 	#integer
@@ -270,7 +267,3 @@ scan
 	: ScanKey OpenPar scan_lit ClosePar Terminator;
 
 WS : [' '\t'\r''\n']+ -> skip;
-
-
-
-
