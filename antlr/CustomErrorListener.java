@@ -9,21 +9,36 @@ import org.antlr.v4.runtime.Recognizer;
 
 public class CustomErrorListener extends BaseErrorListener
 {	
-	private List<String> items;
+	private List<String> errorLexer, errorParser;
 	
 	public CustomErrorListener()
     {
-        this.items = new ArrayList<String>();
+        this.errorLexer = new ArrayList<String>();
+        this.errorParser = new ArrayList<String>();
     }
 	
-	public boolean hasErrors()
+	public boolean hasParserErrors()
     {
-        return this.items.size() > 0;
+        return this.errorParser.size() > 0;
     }
 	
-	public String getError()
+	public boolean hasLexerErrors()
+    {
+        return this.errorLexer.size() > 0;
+    }
+	
+	public String getParserError()
 	{
-		String revisedError = this.items.toString();
+		String revisedError = this.errorParser.toString();
+		
+		revisedError = revisedError.substring(1, revisedError.length()-1);
+		
+		return revisedError;
+	}
+
+	public String getLexerError()
+	{
+		String revisedError = this.errorLexer.toString();
 		
 		revisedError = revisedError.substring(1, revisedError.length()-1);
 		
@@ -35,11 +50,11 @@ public class CustomErrorListener extends BaseErrorListener
     {
     	if(msg.contains("token recognition error"))
     	{
-    		items.add("\n@Lexical Error\n\t" + "[" + line + ":" + charPositionInLine + "] " + msg);
+    		errorLexer.add("\n@Lexical Error: [" + line + ":" + charPositionInLine + "] " + msg);
     	}
     	else
     	{
-			items.add("\n@Syntax Error\n\t" + "[" + line + ":" + charPositionInLine + "] " + msg);
+    		errorParser.add("\n@Syntax Error: [" + line + ":" + charPositionInLine + "] " + msg);
     	}
     }
 }

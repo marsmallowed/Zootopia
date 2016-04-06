@@ -33,16 +33,6 @@ public interface GrammarListener extends ParseTreeListener {
 	 */
 	void exitChar(@NotNull GrammarParser.CharContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link GrammarParser#var_init}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar_init(@NotNull GrammarParser.Var_initContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link GrammarParser#var_init}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar_init(@NotNull GrammarParser.Var_initContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link GrammarParser#for_loop}.
 	 * @param ctx the parse tree
 	 */
@@ -52,6 +42,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFor_loop(@NotNull GrammarParser.For_loopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#var_init}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar_init(@NotNull GrammarParser.Var_initContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#var_init}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar_init(@NotNull GrammarParser.Var_initContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code arrayOp}
 	 * labeled alternative in {@link GrammarParser#operand}.
@@ -182,6 +182,16 @@ public interface GrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArray_index(@NotNull GrammarParser.Array_indexContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link GrammarParser#for_param}.
+	 * @param ctx the parse tree
+	 */
+	void enterFor_param(@NotNull GrammarParser.For_paramContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link GrammarParser#for_param}.
+	 * @param ctx the parse tree
+	 */
+	void exitFor_param(@NotNull GrammarParser.For_paramContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link GrammarParser#func_block}.
 	 * @param ctx the parse tree

@@ -41,18 +41,6 @@ public class GrammarBaseListener implements GrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVar_init(@NotNull GrammarParser.Var_initContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVar_init(@NotNull GrammarParser.Var_initContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterFor_loop(@NotNull GrammarParser.For_loopContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -60,6 +48,18 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFor_loop(@NotNull GrammarParser.For_loopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVar_init(@NotNull GrammarParser.Var_initContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVar_init(@NotNull GrammarParser.Var_initContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -204,6 +204,18 @@ public class GrammarBaseListener implements GrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArray_index(@NotNull GrammarParser.Array_indexContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFor_param(@NotNull GrammarParser.For_paramContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFor_param(@NotNull GrammarParser.For_paramContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -15,7 +15,7 @@ ArrayKey : 'spider'; // Ex: int[] -> sheep spider varName; varName spider 0 = 5;
 Num	: [0-9]+; 
 Float: [0-9]+ '.' [0-9]+;
 Char : '`' [A-Za-z]? '`';
-String : '~' [A-Za-z]* '~';
+String : '~' [A-Za-z' ''\\n']* '~';
 TrueKey: 'diurnal';
 FalseKey: 'nocturnal';
 PrintKey : 'purr';
@@ -60,7 +60,7 @@ Separator : ',';
 CondSep: ':';
 Func : 'func'[A-Za-z]+;
 CommentBlock : 'noise' '-' ~[\r\n]* '\r\n'? '-' -> skip ;
-Var : [A-Za-z_]+;
+Var : 'var'[A-Za-z_]+;
 
 /** PARSER */
 start 
@@ -215,8 +215,12 @@ conditional
 	| if_cond (elseif_cond)* else_cond?;
 
 // Loop Statements
+for_param
+	: IntKey Var AssignOp Num CondSep cond_expr CondSep inc_dec
+	| Var AssignOp Num CondSep cond_expr CondSep inc_dec;
+
 for_loop 
-	: ForKey OpenPar (cond_expr | cond_expr CondSep cond_expr) ClosePar OpenBrace code_block CloseBrace;
+	: ForKey OpenPar for_param ClosePar OpenBrace code_block CloseBrace;
 	
 while_loop 
 	: WhileKey OpenPar cond_expr ClosePar OpenBrace code_block CloseBrace;
